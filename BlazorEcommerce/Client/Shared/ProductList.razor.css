@@ -19,6 +19,17 @@
     color: green;
 }
 
+.pagination{
+    text-align: center;
+    justify-content: center;
+}
+
+.page-selection {
+    margin-right: 10px;
+    margin-bottom: 30px;
+    border-radius: 50%;
+}
+
 @media (max-width: 1023.98px){
     .media{
         flex-direction: column;

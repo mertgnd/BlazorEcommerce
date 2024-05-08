@@ -56,6 +56,7 @@ namespace BlazorEcommerce.Server.Data
 						Description = "The Witcher (Polish: Wiedźmin, pronounced [ˈvjɛd͡ʑmin]) is a series of six fantasy novels and 15 short stories written by Polish author Andrzej Sapkowski. The series revolves around the eponymous 'Witcher', Geralt of Rivia. 'Witchers' are monster hunters given superhuman abilities for the purpose of killing dangerous creatures. The Witcher began with a titular 1986 short story that Sapkowski entered into a competition held by Fantastyka magazine, marking his debut as an author. Due to reader demand, Sapkowski wrote 14 more stories before starting a series of novels in 1994. Known as The Witcher Saga, he wrote one book a year until the fifth and final installment in 1999. A standalone prequel novel, Season of Storms, was published in 2013.",
 						ImageUrl = "https://upload.wikimedia.org/wikipedia/en/3/33/Wiedzmin_1990.png",
 						CategoryId = 1,
+						Featured = true
 					},
 					new Product
 					{
@@ -88,7 +89,8 @@ namespace BlazorEcommerce.Server.Data
 						Title = "The Matrix",
 						Description = "The Matrix is a 1999 science fiction action film written and directed by the Wachowskis, and produced by Joel Silver. Starring Keanu Reeves, Laurence Fishburne, Carrie-Anne Moss, Hugo Weaving, and Joe Pantoliano, and as the first installment in the Matrix franchise, it depicts a dystopian future in which humanity is unknowingly trapped inside a simulated reality, the Matrix, which intelligent machines have created to distract humans while using their bodies as an energy source. When computer programmer Thomas Anderson, under the hacker alias \"Neo\", uncovers the truth, he \"is drawn into a rebellion against the machines\" along with other people who have been freed from the Matrix.",
 						ImageUrl = "https://upload.wikimedia.org/wikipedia/en/c/c1/The_Matrix_Poster.jpg",
-					},
+                        Featured = true
+                    },
 					new Product
 					{
 						Id = 6,
@@ -112,7 +114,8 @@ namespace BlazorEcommerce.Server.Data
 						Title = "Half-Life 2",
 						Description = "Half-Life 2 is a 2004 first-person shooter game developed and published by Valve. Like the original Half-Life, it combines shooting, puzzles, and storytelling, and adds features such as vehicles and physics-based gameplay.",
 						ImageUrl = "https://upload.wikimedia.org/wikipedia/en/2/25/Half-Life_2_cover.jpg",
-					},
+                        Featured = true
+                    },
 					new Product
 					{
 						Id = 9,
