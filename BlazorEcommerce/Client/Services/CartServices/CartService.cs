@@ -16,21 +16,32 @@ namespace BlazorEcommerce.Client.Services.CartServices
 
         public event Action OnChange;
 
-		public async Task AddToCart(CartItem cartItem)
-		{
-			var cart = await _localStorage.GetItemAsync<List<CartItem>>("cart");
-			if (cart == null)
-			{
-				cart = new List<CartItem>();
-			}
+        public async Task AddToCart(CartItem cartItem)
+        {
+            var cart = await _localStorage.GetItemAsync<List<CartItem>>("cart");
+            if (cart == null)
+            {
+                cart = new List<CartItem>();
+            }
 
-			cart.Add(cartItem);
+            var existingItemIndex = cart.FindIndex(x => x.ProductId == cartItem.ProductId && x.ProductTypeId == cartItem.ProductTypeId);
 
-			await _localStorage.SetItemAsync("cart", cart);
-			OnChange.Invoke();
-		}
+            if (existingItemIndex != -1)
+            {
+                // If the product already exists in the cart, update its quantity.
+                cart[existingItemIndex].Quantity += cartItem.Quantity;
+            }
+            else
+            {
+                // If the product does not exist in the cart, add it with the specified quantity.
+                cart.Add(cartItem);
+            }
 
-		public async Task<List<CartItem>> GetCartItems()
+            await _localStorage.SetItemAsync("cart", cart);
+            OnChange.Invoke();
+        }
+
+        public async Task<List<CartItem>> GetCartItems()
 		{
 			var cart = await _localStorage.GetItemAsync<List<CartItem>>("cart");
 			if (cart == null)
@@ -65,6 +76,24 @@ namespace BlazorEcommerce.Client.Services.CartServices
 				await _localStorage.SetItemAsync("cart", cart);
 				OnChange.Invoke();
 			}	
+		}
+
+		public async Task UpdateQuantity(CartProductResponse product)
+		{
+			var cart = await _localStorage.GetItemAsync<List<CartItem>>("cart");
+			if (cart == null) 
+			{
+				return;
+			}
+
+			var cartItem = cart.Find(x => x.ProductId == product.ProductId && x.ProductTypeId == product.ProductTypeId);
+			if(cartItem != null)
+			{
+				cartItem.Quantity = product.Quantity;
+				await _localStorage.SetItemAsync("cart", cart); 
+				OnChange.Invoke();
+			}
+			
 		}
 	}
 }

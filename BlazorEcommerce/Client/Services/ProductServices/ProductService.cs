@@ -26,22 +26,38 @@ namespace BlazorEcommerce.Client.Services.ProductServices
 
 		public async Task GetProducts(string? categoryUrl = null)
 		{
-			var result = categoryUrl == null ? await _httpClient.GetFromJsonAsync<ServiceResponse<List<Product>>>("api/product/featured") :
-											   await _httpClient.GetFromJsonAsync<ServiceResponse<List<Product>>>($"api/product/category/{categoryUrl}");
-			if(result != null && result.Data  != null)
+			try
 			{
-				Products = result.Data;
+				var result = categoryUrl == null ? await _httpClient.GetFromJsonAsync<ServiceResponse<List<Product>>>("api/product/featured") :
+												   await _httpClient.GetFromJsonAsync<ServiceResponse<List<Product>>>($"api/product/category/{categoryUrl}");
+
+				if (result != null)
+				{
+					if (result.Success && result.Data != null)
+					{
+						Products = result.Data;
+						CurrentPage = 1;
+						PageCount = 0;
+					}
+					else
+					{
+						Message = "No Product Found.";
+					}
+				}
+				else
+				{
+					Message = "Error retrieving product data.";
+				}
+				ProductsChanged?.Invoke();
 			}
-
-			CurrentPage = 1;
-			PageCount = 0;
-
-			if (Products.Count == 0) Message = "No Product Found.";
-
-			ProductsChanged.Invoke();
+			catch (Exception ex)
+			{
+				Message = "Error retrieving product data: " + ex.Message;
+				ProductsChanged?.Invoke();
+			}
 		}
 
-        public async Task<List<string>> GetProductSearchSuggestions(string searchText)
+		public async Task<List<string>> GetProductSearchSuggestions(string searchText)
         {
 			var result = await _httpClient.GetFromJsonAsync<ServiceResponse<List<string>>>($"api/product/searchsuggestions/{searchText}");
 			return result.Data;
